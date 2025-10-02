@@ -16,7 +16,7 @@ This project demonstrates an end-to-end **image classification system** built wi
 │ └── model/
 | └── image_classification_model.onnx
 │ ├── Dockerfile
-│ ├── Image Classification.ipynb
+│ ├── Image Classification.ipynb #model training code
 │ ├── main.py # API code
 │ └── requirements.txt
 |
