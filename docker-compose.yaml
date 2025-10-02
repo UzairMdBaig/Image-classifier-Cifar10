@@ -1,14 +1,12 @@
-version: "3.9"
-
 services:
   backend:
     build: ./API
-    container_name: API
+    container_name: API_ic
 
   frontend:
     build: ./frontend
-    container_name: frontend
+    container_name: frontend_ic
     ports:
-    - "80:80"
+    - "70:70"
     depends_on:
       - backend

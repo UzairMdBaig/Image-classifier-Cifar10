@@ -1,5 +1,6 @@
-.imcenv
+imcenv
 Dockerfile
 .dockerignore
 Image Classification.ipynb
 .gitignore
+.git

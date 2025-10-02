@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, Depends
 from fastapi.middleware.cors import CORSMiddleware
 import onnxruntime as ort
 from PIL import Image
@@ -15,7 +15,7 @@ app.add_middleware(
     allow_headers=["*"],          
 )
 
-ort_session = ort.InferenceSession("image_classification_model.onnx")
+ort_session = ort.InferenceSession("model/image_classification_model.onnx")
 
 classes = ['plane', 'car', 'bird', 'cat','deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
@@ -23,8 +23,9 @@ classes = ['plane', 'car', 'bird', 'cat','deer', 'dog', 'frog', 'horse', 'ship',
 mean = np.array([0.49139968, 0.48215827, 0.44653124], dtype=np.float32)
 std = np.array([0.24703233, 0.24348505, 0.26158768], dtype=np.float32)
 
-def preprocess_image(image_bytes):
-    image = Image.open(image_bytes).convert("RGB")
+def preprocess_image(file: UploadFile = File(...)):
+    content = file.file.read()
+    image = Image.open(io.BytesIO(content)).convert("RGB")
     image = image.resize((224, 224))
     image = np.array(image).astype("float32") / 255.0
     image = (image - mean) / std 
@@ -33,9 +34,7 @@ def preprocess_image(image_bytes):
     return image.astype(np.float32)
 
 @app.post("/predict")
-async def predict(file: UploadFile = File(...)):
-    file = await file.read()
-    image = preprocess_image(io.BytesIO(file))
+async def predict(image: np.ndarray = Depends(preprocess_image)):
     predicted_class =  np.argmax(ort_session.run(None, {"image": image})[0])
     return {"predicted_class": classes[predicted_class]}
 
