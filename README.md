@@ -54,8 +54,8 @@ for epoch in range(epochs):
 ### Clone the repository
 
 ```bash
-git clone https://github.com/your-username/image-classification.git
-cd image-classification
+git clone https://github.com/your-username/Image-classifier-Cifar10.git
+cd Image-classifier-Cifar10
 ```
 
 ### Build and run with Docker Compose
