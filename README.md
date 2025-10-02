@@ -10,7 +10,7 @@ This project demonstrates an end-to-end **image classification system** built wi
 ---
 
 ## 📂 Project Structure (Highlighting main folders/ files)
-
+```plaintext
 .
 ├── API/ # FastAPI backend
 │ └── model/
@@ -26,8 +26,8 @@ This project demonstrates an end-to-end **image classification system** built wi
 │ └── App.js
 ├── docker-compose.yml # Multi-service setup
 └── README.md
+```
 
----
 
 ## 🚀 Training
 
